@@ -3,7 +3,7 @@ import gql from "graphql-tag";
 // validation schema move to common package
 import React from "react";
 import { Mutation } from "react-apollo";
-import { View } from "react-native";
+import { KeyboardAvoidingView } from "react-native";
 import { Button } from "react-native-elements";
 import * as yup from "yup";
 import { normalizeErrors } from "../../utils/normalizeErrors";
@@ -67,7 +67,8 @@ export class LoginView extends React.PureComponent<FormikProps<FormValues>> {
             }}
             render={props => {
               return (
-                <View
+                <KeyboardAvoidingView
+                  behavior="padding"
                   style={{
                     flex: 1,
                     justifyContent: "center",
@@ -101,7 +102,7 @@ export class LoginView extends React.PureComponent<FormikProps<FormValues>> {
                       backgroundColor: "#03a87c"
                     }}
                   />
-                </View>
+                </KeyboardAvoidingView>
               );
             }}
           />
