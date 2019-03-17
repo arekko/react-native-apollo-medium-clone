@@ -3,8 +3,9 @@ import gql from "graphql-tag";
 // validation schema move to common package
 import React from "react";
 import { Mutation } from "react-apollo";
-import { KeyboardAvoidingView } from "react-native";
+import { KeyboardAvoidingView, Text, View } from "react-native";
 import { Button } from "react-native-elements";
+import { Link } from "react-router-native";
 import * as yup from "yup";
 import { normalizeErrors } from "../../utils/normalizeErrors";
 import { InputField } from "../shared/InputField";
@@ -72,9 +73,35 @@ export class LoginView extends React.PureComponent<FormikProps<FormValues>> {
                   style={{
                     flex: 1,
                     justifyContent: "center",
-                    alignItems: "center"
+                    alignItems: "center",
+                    padding: 40
                   }}
                 >
+                  <View>
+                    <Text
+                      style={{
+                        fontSize: 24,
+                        textAlign: "center",
+                        fontWeight: "bold",
+                        marginBottom: 20,
+                        color: "rgba(0,0,0,.84)"
+                      }}
+                    >
+                      Sign in with email
+                    </Text>
+                    <Text
+                      style={{
+                        fontSize: 18,
+                        textAlign: "center",
+                        marginBottom: 30,
+                        color: "rgba(0,0,0,.76)"
+                      }}
+                    >
+                      Enter the email address associated with your account, and
+                      we’ll send a magic link to your inbox.
+                    </Text>
+                  </View>
+
                   <Field
                     name="email"
                     placeholder="Email"
@@ -102,6 +129,21 @@ export class LoginView extends React.PureComponent<FormikProps<FormValues>> {
                       backgroundColor: "#03a87c"
                     }}
                   />
+
+                  <View
+                    style={{
+                      flexDirection: "row",
+                      justifyContent: "space-between",
+                      marginTop: 30
+                    }}
+                  >
+                    <Text style={{ marginRight: 10, color: "#757575" }}>
+                      Don't have an account?
+                    </Text>
+                    <Link to="/register">
+                      <Text style={{ color: "#03a87c" }}>Sign up</Text>
+                    </Link>
+                  </View>
                 </KeyboardAvoidingView>
               );
             }}
