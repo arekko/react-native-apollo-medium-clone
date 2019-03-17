@@ -41,13 +41,13 @@ const loginMutation = gql`
   }
 `;
 
-export class LoginView extends React.PureComponent<FormikProps<FormValues>> {
+export class RegisterView extends React.PureComponent<FormikProps<FormValues>> {
   render() {
     return (
       <Mutation mutation={loginMutation}>
         {(mutate, { client }) => (
           <Formik
-            initialValues={{ email: "", password: "" }}
+            initialValues={{ email: "", password: "", fullname: "" }}
             validationSchema={loginSchema}
             onSubmit={async (values, { setErrors }) => {
               // optional reset cache
@@ -102,6 +102,14 @@ export class LoginView extends React.PureComponent<FormikProps<FormValues>> {
                       we’ll send a magic link to your inbox.
                     </Text>
                   </View>
+                  <Field
+                    name="fullname"
+                    placeholder="Your full name"
+                    component={InputField}
+                    autoCapitalize="none"
+                    iconName="user"
+                    iconSize={18}
+                  />
 
                   <Field
                     name="email"
@@ -122,7 +130,7 @@ export class LoginView extends React.PureComponent<FormikProps<FormValues>> {
                   />
 
                   <Button
-                    title="Login"
+                    title="Create account"
                     onPress={() => props.handleSubmit()}
                     buttonStyle={{
                       width: 200,
@@ -139,10 +147,10 @@ export class LoginView extends React.PureComponent<FormikProps<FormValues>> {
                     }}
                   >
                     <Text style={{ marginRight: 10, color: "#757575" }}>
-                      Don't have an account?
+                      Already have an account?
                     </Text>
-                    <Link to="/register">
-                      <Text style={{ color: "#03a87c" }}>Sign up</Text>
+                    <Link to="/login">
+                      <Text style={{ color: "#03a87c" }}>Sign in</Text>
                     </Link>
                   </View>
                 </KeyboardAvoidingView>

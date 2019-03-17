@@ -33,7 +33,7 @@ export class InputField extends React.Component<FieldProps<any> & Props> {
     return (
       <Input
         {...props}
-        containerStyle={{ width: "100%" }}
+        containerStyle={{ width: "100%", marginTop: 20 }}
         errorStyle={errStyle}
         errorMessage={errorMsg as any}
         onChangeText={this.onChangeText}
