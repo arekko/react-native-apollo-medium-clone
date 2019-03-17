@@ -5,7 +5,7 @@ import React from "react";
 import { Mutation } from "react-apollo";
 import { KeyboardAvoidingView, Text, View } from "react-native";
 import { Button } from "react-native-elements";
-import { Link } from "react-router-native";
+import { Link, RouteComponentProps } from "react-router-native";
 import * as yup from "yup";
 import { normalizeErrors } from "../../utils/normalizeErrors";
 import { InputField } from "../shared/InputField";
@@ -13,7 +13,7 @@ import { InputField } from "../shared/InputField";
 export const passwordNotLongEnough = "password must be at least 3 characters";
 export const invalidEmail = "email must be a valid email";
 
-const loginSchema = yup.object().shape({
+const registerSchema = yup.object().shape({
   email: yup
     .string()
     .min(3, invalidEmail)
@@ -24,47 +24,67 @@ const loginSchema = yup.object().shape({
     .string()
     .min(3, passwordNotLongEnough)
     .max(255, passwordNotLongEnough)
+    .required(),
+  username: yup
+    .string()
+    .min(3, passwordNotLongEnough)
+    .max(255, passwordNotLongEnough)
+    .required(),
+  fullname: yup
+    .string()
+    .min(3, passwordNotLongEnough)
+    .max(255, passwordNotLongEnough)
     .required()
 });
 
 interface FormValues {
+  username: string;
+  fullname: string;
   email: string;
   password: string;
 }
 
-const loginMutation = gql`
-  mutation LoginMutation($email: String!, $password: String!) {
-    login(email: $email, password: $password) {
-      message
+const registerMutation = gql`
+  mutation RegisterMutation($data: RegisterInput!) {
+    register(data: $data) {
       path
+      message
     }
   }
 `;
 
-export class RegisterView extends React.PureComponent<FormikProps<FormValues>> {
+export class RegisterView extends React.PureComponent<
+  FormikProps<FormValues> & RouteComponentProps<{}>
+> {
   render() {
     return (
-      <Mutation mutation={loginMutation}>
+      <Mutation mutation={registerMutation}>
         {(mutate, { client }) => (
           <Formik
-            initialValues={{ email: "", password: "", fullname: "" }}
-            validationSchema={loginSchema}
+            initialValues={{
+              email: "",
+              password: "",
+              fullname: "",
+              username: ""
+            }}
+            validationSchema={registerSchema}
             onSubmit={async (values, { setErrors }) => {
               // optional reset cache
               console.log(values);
               // await client.resetStore();
 
               const {
-                data: { login }
+                data: { register }
               }: any = await mutate({
-                variables: values
+                variables: { data: values }
               });
 
-              if (login) {
-                setErrors(normalizeErrors(login));
+              if (register) {
+                setErrors(normalizeErrors(register));
               }
-              console.log(login);
-              // props.history.push("/account");
+              console.log(register);
+
+              register === null && this.props.history.push("/login");
             }}
             render={props => {
               return (
@@ -88,7 +108,7 @@ export class RegisterView extends React.PureComponent<FormikProps<FormValues>> {
                         color: "rgba(0,0,0,.84)"
                       }}
                     >
-                      Sign in with email
+                      Sign up with email
                     </Text>
                     <Text
                       style={{
@@ -105,6 +125,15 @@ export class RegisterView extends React.PureComponent<FormikProps<FormValues>> {
                   <Field
                     name="fullname"
                     placeholder="Your full name"
+                    component={InputField}
+                    autoCapitalize="none"
+                    iconName="user"
+                    iconSize={18}
+                  />
+
+                  <Field
+                    name="username"
+                    placeholder="Username"
                     component={InputField}
                     autoCapitalize="none"
                     iconName="user"
