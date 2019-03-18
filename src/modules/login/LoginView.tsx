@@ -5,7 +5,7 @@ import React from "react";
 import { Mutation } from "react-apollo";
 import { KeyboardAvoidingView, Text, View } from "react-native";
 import { Button } from "react-native-elements";
-import { Link } from "react-router-native";
+import { Link, RouteComponentProps } from "react-router-native";
 import * as yup from "yup";
 import { normalizeErrors } from "../../utils/normalizeErrors";
 import { InputField } from "../shared/InputField";
@@ -41,7 +41,9 @@ const loginMutation = gql`
   }
 `;
 
-export class LoginView extends React.PureComponent<FormikProps<FormValues>> {
+export class LoginView extends React.PureComponent<
+  FormikProps<FormValues> & RouteComponentProps<{}>
+> {
   render() {
     return (
       <Mutation mutation={loginMutation}>
@@ -64,7 +66,7 @@ export class LoginView extends React.PureComponent<FormikProps<FormValues>> {
                 setErrors(normalizeErrors(login));
               }
               console.log(login);
-              // props.history.push("/account");
+              login === null && this.props.history.push("/feed");
             }}
             render={props => {
               return (
