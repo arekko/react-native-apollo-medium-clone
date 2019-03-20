@@ -1,13 +1,17 @@
 import * as React from "react";
 import { ApolloProvider } from "react-apollo";
+import { createAppContainer } from "react-navigation";
 import { client } from "./apollo";
-import { Routes } from "./routes";
+import { createRootNavigator } from "./routes";
+// import { Routes } from "./routes";
 
 export default class App extends React.PureComponent {
   render() {
+    // const Layout = createRootNavigator(true);
+    const AppContainer = createAppContainer(createRootNavigator(false));
     return (
       <ApolloProvider client={client}>
-        <Routes />
+        <AppContainer />
       </ApolloProvider>
     );
   }

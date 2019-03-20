@@ -72,7 +72,7 @@ const styles = StyleSheet.create({
     fontSize: 15
   },
   card__date: {
-    fontSize: 15,
+    fontSize: 13,
     color: "#9e9e9e"
   }
 });
@@ -90,7 +90,7 @@ export class Feed extends React.PureComponent<{}> {
                 horizontal={true}
                 showsHorizontalScrollIndicator={false}
                 contentContainerStyle={{
-                  justifyContent: "center",
+                  justifyContent: "center"
                 }}
                 style={{
                   paddingVertical: 20
