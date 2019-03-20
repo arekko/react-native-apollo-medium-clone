@@ -6,7 +6,7 @@ import { LoginView } from "../modules/login/LoginView";
 import { RegisterView } from "../modules/register/RegisterView";
 
 export const Routes = () => (
-  <NativeRouter initialEntries={["/login"]}>
+  <NativeRouter initialEntries={["/feed"]}>
     <Switch>
       <View style={{ flex: 1 }}>
         <Route exact={true} path="/login" component={LoginView} />
