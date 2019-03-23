@@ -10,9 +10,21 @@ const host =
 
 const cache = new InMemoryCache();
 
+const defaultOptions = {
+  watchQuery: {
+    fetchPolicy: "network-only",
+    errorPolicy: "ignore"
+  },
+  query: {
+    fetchPolicy: "network-only",
+    errorPolicy: "all"
+  }
+};
+
 export const client = new ApolloClient({
   link: createUploadLink({
     uri: host
   }),
-  cache
+  cache,
+  defaultOptions: defaultOptions as any
 });

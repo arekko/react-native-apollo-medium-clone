@@ -7,6 +7,7 @@ import {
   createStackNavigator,
   createSwitchNavigator
 } from "react-navigation";
+import { ArticleView } from "./modules/article/ArticleView";
 import { AddNewArticleView } from "./modules/bookmark/BookmarkView";
 import { Feed } from "./modules/feed/Feed";
 import { LoginView } from "./modules/login/LoginView";
@@ -17,6 +18,20 @@ import { BookmarkView } from "./modules/upload/AddNewArticleView";
 const headerStyle = {
   marginTop: Platform.OS === "android" ? StatusBar.currentHeight : 0
 };
+
+export const FeedScreen = createStackNavigator(
+  {
+    Home: {
+      screen: Feed
+    },
+    Article: {
+      screen: ArticleView
+    }
+  },
+  {
+    initialRouteKey: "Home"
+  }
+);
 
 export const SignedOut = createStackNavigator(
   {
@@ -36,7 +51,7 @@ export const SignedOut = createStackNavigator(
 export const SignedIn = createBottomTabNavigator(
   {
     Home: {
-      screen: Feed,
+      screen: FeedScreen,
       navigationOptions: {
         tabBarIcon: ({ tintColor }: { tintColor: any }) => (
           <Icon name="home" size={23} color={tintColor} />

@@ -3,9 +3,14 @@ import gql from "graphql-tag";
 // validation schema move to common package
 import React from "react";
 import { Mutation } from "react-apollo";
-import { KeyboardAvoidingView, Text, View } from "react-native";
+import {
+  KeyboardAvoidingView,
+  Text,
+  TouchableOpacity,
+  View
+} from "react-native";
 import { Button } from "react-native-elements";
-import { Link, RouteComponentProps } from "react-router-native";
+import { NavigationScreenProp } from "react-navigation";
 import * as yup from "yup";
 import { normalizeErrors } from "../../utils/normalizeErrors";
 import { InputField } from "../shared/InputField";
@@ -44,6 +49,10 @@ interface FormValues {
   password: string;
 }
 
+export interface RegisterScreenProps {
+  navigation: NavigationScreenProp<any, any>;
+}
+
 const registerMutation = gql`
   mutation RegisterMutation($data: RegisterInput!) {
     register(data: $data) {
@@ -54,7 +63,7 @@ const registerMutation = gql`
 `;
 
 export class RegisterView extends React.PureComponent<
-  FormikProps<FormValues> & RouteComponentProps<{}>
+  FormikProps<FormValues> & RegisterScreenProps
 > {
   render() {
     return (
@@ -82,9 +91,9 @@ export class RegisterView extends React.PureComponent<
               if (register) {
                 setErrors(normalizeErrors(register));
               }
-              console.log(register);
+              console.log(this.props);
 
-              register === null && this.props.history.push("/login");
+              register === null && this.props.navigation.navigate("SignIn");
             }}
             render={props => {
               return (
@@ -178,9 +187,11 @@ export class RegisterView extends React.PureComponent<
                     <Text style={{ marginRight: 10, color: "#757575" }}>
                       Already have an account?
                     </Text>
-                    <Link to="/login">
+                    <TouchableOpacity
+                      onPress={() => this.props.navigation.navigate("SignIn")}
+                    >
                       <Text style={{ color: "#03a87c" }}>Sign in</Text>
-                    </Link>
+                    </TouchableOpacity>
                   </View>
                 </KeyboardAvoidingView>
               );

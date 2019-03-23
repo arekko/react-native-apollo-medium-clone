@@ -8,8 +8,10 @@ import {
   StatusBar,
   StyleSheet,
   Text,
+  TouchableOpacity,
   View
 } from "react-native";
+import { NavigationScreenProp } from "react-navigation";
 import { HorizontalCard } from "../components/HorizontalCard";
 
 const getArticles = gql`
@@ -77,7 +79,11 @@ const styles = StyleSheet.create({
   }
 });
 
-export class Feed extends React.PureComponent<{}> {
+interface Props {
+  navigation: NavigationScreenProp<any, any>;
+}
+
+export class Feed extends React.PureComponent<Props> {
   render() {
     return (
       <Query query={getArticles}>
@@ -109,21 +115,29 @@ export class Feed extends React.PureComponent<{}> {
                     <Text style={styles.card__category}>
                       SOFTWARE ENGINEERING
                     </Text>
-                    <View style={styles.card__middle}>
-                      <View style={{ width: 0, flexGrow: 1, flex: 1 }}>
-                        <Text
-                          style={styles.card__title}
-                          ellipsizeMode="tail"
-                          numberOfLines={2}
-                        >
-                          {a.title}
-                        </Text>
+                    <TouchableOpacity
+                      onPress={() => {
+                        this.props.navigation.navigate("Article", {
+                          id: a.id
+                        });
+                      }}
+                    >
+                      <View style={styles.card__middle}>
+                        <View style={{ width: 0, flexGrow: 1, flex: 1 }}>
+                          <Text
+                            style={styles.card__title}
+                            ellipsizeMode="tail"
+                            numberOfLines={2}
+                          >
+                            {a.title}
+                          </Text>
+                        </View>
+                        <Image
+                          source={{ uri: a.picture_url }}
+                          style={{ width: 80, height: 80 }}
+                        />
                       </View>
-                      <Image
-                        source={{ uri: a.picture_url }}
-                        style={{ width: 80, height: 80 }}
-                      />
-                    </View>
+                    </TouchableOpacity>
                     <View style={styles.card__bottom}>
                       <View>
                         <Text style={styles.card__username}>
@@ -141,9 +155,3 @@ export class Feed extends React.PureComponent<{}> {
     );
   }
 }
-
-//  <Card
-//                     key={`${l.id}-flc`}
-//                     title={l.title}
-//                     image={l.picture_url ? { uri: l.picture_url } : undefined}
-//                   />

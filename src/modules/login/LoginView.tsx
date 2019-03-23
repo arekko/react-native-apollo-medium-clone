@@ -3,9 +3,14 @@ import gql from "graphql-tag";
 // validation schema move to common package
 import React from "react";
 import { Mutation } from "react-apollo";
-import { KeyboardAvoidingView, Text, View } from "react-native";
+import {
+  KeyboardAvoidingView,
+  Text,
+  TouchableOpacity,
+  View
+} from "react-native";
 import { Button } from "react-native-elements";
-import { Link, RouteComponentProps } from "react-router-native";
+import { NavigationScreenProp } from "react-navigation";
 import * as yup from "yup";
 import { normalizeErrors } from "../../utils/normalizeErrors";
 import { InputField } from "../shared/InputField";
@@ -41,8 +46,12 @@ const loginMutation = gql`
   }
 `;
 
+export interface Props {
+  navigation: NavigationScreenProp<any, any>;
+}
+
 export class LoginView extends React.PureComponent<
-  FormikProps<FormValues> & RouteComponentProps<{}>
+  FormikProps<FormValues> & Props
 > {
   render() {
     return (
@@ -66,7 +75,7 @@ export class LoginView extends React.PureComponent<
                 setErrors(normalizeErrors(login));
               }
               console.log(login);
-              login === null && this.props.history.push("/feed");
+              login === null && this.props.navigation.navigate("SignedIn");
             }}
             render={props => {
               return (
@@ -143,9 +152,11 @@ export class LoginView extends React.PureComponent<
                     <Text style={{ marginRight: 10, color: "#757575" }}>
                       Don't have an account?
                     </Text>
-                    <Link to="/register">
+                    <TouchableOpacity
+                      onPress={() => this.props.navigation.navigate("SignUp")}
+                    >
                       <Text style={{ color: "#03a87c" }}>Sign up</Text>
-                    </Link>
+                    </TouchableOpacity>
                   </View>
                 </KeyboardAvoidingView>
               );
