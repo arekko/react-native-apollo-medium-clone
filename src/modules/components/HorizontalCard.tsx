@@ -5,9 +5,12 @@ import {
   ImageStyle,
   StyleSheet,
   Text,
+  TouchableOpacity,
   View
 } from "react-native";
 import { capitalize } from "../../utils/capitalize";
+import { formatDate } from "../../utils/formatDate";
+import { readTime } from "../../utils/readTime";
 
 interface User {
   username: string;
@@ -21,10 +24,13 @@ interface Article {
   title: string;
   owner: User;
   creation_date: string;
+  id: number;
+  text: string;
 }
 
 interface Props {
   article: Article;
+  onPressTop: (id: number) => void;
 }
 
 const SCREEN_WIDTH = Dimensions.get("screen").width;
@@ -34,22 +40,30 @@ export const HorizontalCard: React.FC<Props> = ({
     picture_url,
     title,
     owner: { fullname },
-    creation_date
-  }
+    creation_date,
+    id,
+    text
+  },
+  onPressTop
 }) => (
   <View style={styles.card}>
-    <Image
-      style={styles.card__img as ImageStyle}
-      source={{
-        uri: picture_url
-      }}
-    />
-    <View>
-      <Text style={styles.card__title}>{title}</Text>
-    </View>
+    <TouchableOpacity onPress={() => onPressTop(id)}>
+      <Image
+        style={styles.card__img as ImageStyle}
+        source={{
+          uri: picture_url
+        }}
+      />
+      <View>
+        <Text style={styles.card__title}>{title}</Text>
+      </View>
+    </TouchableOpacity>
     <View style={styles.card__bottom}>
       <Text style={styles.card__username}>{capitalize(fullname)}</Text>
-      <Text style={styles.card__date}>{creation_date}</Text>
+      <View style={styles.card__stats}>
+        <Text style={styles.card__date}>{formatDate(creation_date)}</Text>
+        <Text style={styles.card__readTime}>{readTime(text)} min read</Text>
+      </View>
     </View>
   </View>
 );
@@ -86,8 +100,17 @@ const styles = StyleSheet.create({
     color: "#111"
   },
   card__date: {
-    paddingTop: 5,
     fontSize: 14,
     color: "#9e9e9e"
+  },
+  card__stats: {
+    flexDirection: "row",
+    alignItems: "center",
+    paddingTop: 5
+  },
+  card__readTime: {
+    fontSize: 14,
+    color: "#9e9e9e",
+    marginLeft: 10
   }
 });
