@@ -33,13 +33,23 @@ export const FeedScreen = createStackNavigator(
   }
 );
 
+FeedScreen.navigationOptions = ({ navigation }: any) => {
+  let tabBarVisible = true;
+  if (navigation.state.index > 0) {
+    tabBarVisible = false;
+  }
+  return {
+    tabBarVisible
+  };
+};
+
 export const SignedOut = createStackNavigator(
   {
-    SignUp: {
-      screen: RegisterView
-    },
     SignIn: {
       screen: LoginView
+    },
+    SignUp: {
+      screen: RegisterView
     }
   },
   {

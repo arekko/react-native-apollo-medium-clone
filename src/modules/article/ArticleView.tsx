@@ -28,10 +28,17 @@ interface Props {
   navigation: NavigationScreenProp<any, any>;
 }
 
-// TODO: hide the bottom tabs
+// TODO: Fix top bar
+// TODO: create bottom bar
+
+// FIXME: Refactor existing code
+// FIXME: create HOC for apollo
+
 export class ArticleView extends React.PureComponent<Props & any> {
-  static navigatorStyle = {
-    tabBarHidden: true
+  static navigationOptions = ({ navigation }: any) => {
+    return {
+      title: "Detail"
+    };
   };
 
   render() {

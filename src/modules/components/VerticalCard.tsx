@@ -3,6 +3,7 @@ import { Image, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import Icon from "react-native-vector-icons/MaterialIcons";
 import { formatDate } from "../../utils/formatDate";
 import { readTime } from "../../utils/readTime";
+import { capitalize } from '../../utils/capitalize';
 
 interface VerticleCardProps {
   data: any;
@@ -14,7 +15,7 @@ export const VerticalCard: React.FC<VerticleCardProps> = props => {
 
   return (
     <View style={styles.card} key={data.id + "card"}>
-      <Text style={styles.card__category}>SOFTWARE ENGINEERING</Text>
+      {/* <Text style={styles.card__category}>SOFTWARE ENGINEERING</Text>  */}
       <TouchableOpacity onPress={() => onPressTop(data.id)}>
         <View style={styles.card__middle}>
           <View style={{ width: 0, flexGrow: 1, flex: 1 }}>
@@ -33,7 +34,7 @@ export const VerticalCard: React.FC<VerticleCardProps> = props => {
         </View>
       </TouchableOpacity>
       <View style={styles.card__bottom}>
-        <Text style={styles.card__username}>{data.owner.fullname}</Text>
+        <Text style={styles.card__username}>{capitalize(data.owner.fullname)}</Text>
         <View style={styles.card__stats}>
           <View style={styles.card__time}>
             <Text style={styles.card__date}>
@@ -45,9 +46,10 @@ export const VerticalCard: React.FC<VerticleCardProps> = props => {
           </View>
           <Icon
             name="bookmark-border"
-            size={24}
+            size={20}
             color="#3e3e3e"
             style={styles.card__icon}
+            onPress={() => console.log("pressed")}
           />
         </View>
       </View>

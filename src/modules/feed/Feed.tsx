@@ -24,6 +24,11 @@ const getArticles = gql`
   }
 `;
 
+
+  // TODO: Create infinuty scroll list 
+  // TODO: Create logic for top scrollView
+  // TODO: Implement bookmarks and Profile page 
+
 const SCREEN_WIDTH = Dimensions.get("screen").width;
 const STATUSBAR_HEIGHT = StatusBar.currentHeight;
 
@@ -32,6 +37,10 @@ interface Props {
 }
 
 export class Feed extends React.PureComponent<Props> {
+  static navigationOptions = {
+    header: null
+  };
+
   onPressTop = (id: number) => {
     this.props.navigation.navigate("Article", {
       id
@@ -72,7 +81,6 @@ export class Feed extends React.PureComponent<Props> {
                     key={item.id}
                     data={item}
                     onPressTop={this.onPressTop}
-                    
                   />
                 ))}
             </ScrollView>
