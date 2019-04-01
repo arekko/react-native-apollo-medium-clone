@@ -26,7 +26,10 @@
     "eject": "react-native-scripts-ts eject",
     "android": "react-native-scripts-ts android",
     "ios": "react-native-scripts-ts ios",
-    "test": "jest"
+    "test": "jest",
+    "schema:download": "apollo schema:download --endpoint=http://localhost:4000/graphql",
+    "codegen:generate": "apollo codegen:generate --outputFlat=./src/schemaTypes.ts  --queries=./src/**/*.tsx --localSchemaFile=./schema.json --target=typescript",
+    "gen-types": "npm run schema:download && npm run codegen:generate"
   },
   "jest": {
     "globals": {
@@ -70,6 +73,7 @@
     "react-native-vector-icons": "^6.4.1",
     "react-navigation": "^3.5.1",
     "react-router-native": "^4.4.0",
+    "react-waypoint": "^9.0.1",
     "yup": "^0.27.0"
   }
 }

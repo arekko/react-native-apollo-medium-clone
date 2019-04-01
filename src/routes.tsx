@@ -7,13 +7,13 @@ import {
   createStackNavigator,
   createSwitchNavigator
 } from "react-navigation";
-import { ArticleView } from "./modules/article/ArticleView";
-import { AddNewArticleView } from "./modules/bookmark/BookmarkView";
+import { ArticleScreen } from "./modules/article/ArticleScreen";
+import { BookmarkView } from "./modules/bookmark/BookmarkView";
 import { Feed } from "./modules/feed/Feed";
 import { LoginView } from "./modules/login/LoginView";
 import { Profile } from "./modules/profile/ProfileView";
 import { RegisterView } from "./modules/register/RegisterView";
-import { BookmarkView } from "./modules/upload/AddNewArticleView";
+import { AddNewArticleView } from "./modules/upload/AddNewArticleView";
 
 const headerStyle = {
   marginTop: Platform.OS === "android" ? StatusBar.currentHeight : 0
@@ -25,11 +25,12 @@ export const FeedScreen = createStackNavigator(
       screen: Feed
     },
     Article: {
-      screen: ArticleView
+      screen: ArticleScreen
     }
   },
   {
-    initialRouteKey: "Home"
+    initialRouteKey: "Home",
+    
   }
 );
 
@@ -64,7 +65,7 @@ export const SignedIn = createBottomTabNavigator(
       screen: FeedScreen,
       navigationOptions: {
         tabBarIcon: ({ tintColor }: { tintColor: any }) => (
-          <Icon name="home" size={23} color={tintColor} />
+          <Icon name="home" size={24} color={tintColor} />
         )
       }
     },
@@ -72,7 +73,7 @@ export const SignedIn = createBottomTabNavigator(
       screen: BookmarkView,
       navigationOptions: {
         tabBarIcon: ({ tintColor }: { tintColor: any }) => (
-          <Icon name="bookmark" size={23} color={tintColor} />
+          <Icon name="bookmark" size={24} color={tintColor} />
         )
       }
     },
@@ -80,7 +81,7 @@ export const SignedIn = createBottomTabNavigator(
       screen: AddNewArticleView,
       navigationOptions: {
         tabBarIcon: ({ tintColor }: { tintColor: any }) => (
-          <Icon name="plus-square" size={23} color={tintColor} />
+          <Icon name="plus-square" size={24} color={tintColor} />
         )
       }
     },
@@ -88,7 +89,7 @@ export const SignedIn = createBottomTabNavigator(
       screen: Profile,
       navigationOptions: {
         tabBarIcon: ({ tintColor }: { tintColor: any }) => (
-          <Icon name="user" size={23} color={tintColor} />
+          <Icon name="user" size={24} color={tintColor} />
         )
       }
     }
@@ -97,7 +98,15 @@ export const SignedIn = createBottomTabNavigator(
     tabBarOptions: {
       activeTintColor: "#000",
       showLabel: false,
-      style: { backgroundColor: "#fff", height: 45 }
+      style: {
+        backgroundColor: "#fff",
+        height: 45,
+        borderTopWidth: 0,
+        shadowOffset: { width: 5, height: 3 },
+        shadowColor: "black",
+        shadowOpacity: 0.5,
+        elevation: 5
+      }
     }
   }
 );

@@ -5,8 +5,8 @@ import { Platform } from "react-native";
 
 const host =
   Platform.OS === "ios"
-    ? "http://192.168.1.228:4000/graphql"
-    : "http://192.168.1.228:4000/graphql";
+    ? "http://192.168.1.229:4000/graphql"
+    : "http://192.168.1.229:4000/graphql";
 
 const cache = new InMemoryCache();
 

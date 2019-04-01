@@ -8,7 +8,7 @@ import { createRootNavigator } from "./routes";
 export default class App extends React.PureComponent {
   render() {
     // const Layout = createRootNavigator(true);
-  const AppContainer = createAppContainer(createRootNavigator(true));
+    const AppContainer = createAppContainer(createRootNavigator(true));
     return (
       <ApolloProvider client={client}>
         <AppContainer />

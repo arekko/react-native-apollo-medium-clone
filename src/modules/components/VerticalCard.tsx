@@ -1,9 +1,9 @@
 import React from "react";
 import { Image, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import Icon from "react-native-vector-icons/MaterialIcons";
+import { capitalize } from "../../utils/capitalize";
 import { formatDate } from "../../utils/formatDate";
 import { readTime } from "../../utils/readTime";
-import { capitalize } from '../../utils/capitalize';
 
 interface VerticleCardProps {
   data: any;
@@ -29,12 +29,14 @@ export const VerticalCard: React.FC<VerticleCardProps> = props => {
           </View>
           <Image
             source={{ uri: data.picture_url }}
-            style={{ width: 80, height: 80 }}
+            style={{ width: 75, height: 75 }}
           />
         </View>
       </TouchableOpacity>
       <View style={styles.card__bottom}>
-        <Text style={styles.card__username}>{capitalize(data.owner.fullname)}</Text>
+        <Text style={styles.card__username}>
+          {capitalize(data.owner.fullname)}
+        </Text>
         <View style={styles.card__stats}>
           <View style={styles.card__time}>
             <Text style={styles.card__date}>
@@ -72,15 +74,15 @@ const styles = StyleSheet.create({
   card__middle: {
     flexDirection: "row",
     justifyContent: "space-between",
-    marginTop: 10,
-    marginBottom: 10
+    marginTop: 10
   },
   card__title: {
     fontSize: 20,
     fontWeight: "bold",
-    paddingRight: 10,
+    paddingRight: 15,
     flex: 1,
-    flexWrap: "wrap"
+    flexWrap: "wrap",
+    lineHeight: 30
   },
   card__bottom: {
     flexDirection: "column"
